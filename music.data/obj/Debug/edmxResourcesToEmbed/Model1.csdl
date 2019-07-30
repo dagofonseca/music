@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="musicDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Album">
+    <Key>
+      <PropertyRef Name="album_id" />
+    </Key>
+    <Property Name="album_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="relesed" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Song" Relationship="Self.FK__Song__fk_album_i__403A8C7D" FromRole="Album" ToRole="Song" />
+  </EntityType>
+  <EntityType Name="Artist">
+    <Key>
+      <PropertyRef Name="artist_id" />
+    </Key>
+    <Property Name="artist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Song" Relationship="Self.FK__Song__fk_artist___3F466844" FromRole="Artist" ToRole="Song" />
+  </EntityType>
+  <EntityType Name="Song">
+    <Key>
+      <PropertyRef Name="song_id" />
+    </Key>
+    <Property Name="song_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="relesed" Type="Int32" Nullable="false" />
+    <Property Name="genre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fk_artist_id" Type="Int32" />
+    <Property Name="fk_album_id" Type="Int32" />
+    <NavigationProperty Name="Album" Relationship="Self.FK__Song__fk_album_i__403A8C7D" FromRole="Song" ToRole="Album" />
+    <NavigationProperty Name="Artist" Relationship="Self.FK__Song__fk_artist___3F466844" FromRole="Song" ToRole="Artist" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="Binary" MaxLength="64" FixedLength="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Song__fk_album_i__403A8C7D">
+    <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
+    <End Role="Song" Type="Self.Song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Album">
+        <PropertyRef Name="album_id" />
+      </Principal>
+      <Dependent Role="Song">
+        <PropertyRef Name="fk_album_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Song__fk_artist___3F466844">
+    <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
+    <End Role="Song" Type="Self.Song" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Artist">
+        <PropertyRef Name="artist_id" />
+      </Principal>
+      <Dependent Role="Song">
+        <PropertyRef Name="fk_artist_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="musicDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Album" EntityType="Self.Album" />
+    <EntitySet Name="Artist" EntityType="Self.Artist" />
+    <EntitySet Name="Song" EntityType="Self.Song" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Song__fk_album_i__403A8C7D" Association="Self.FK__Song__fk_album_i__403A8C7D">
+      <End Role="Album" EntitySet="Album" />
+      <End Role="Song" EntitySet="Song" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Song__fk_artist___3F466844" Association="Self.FK__Song__fk_artist___3F466844">
+      <End Role="Artist" EntitySet="Artist" />
+      <End Role="Song" EntitySet="Song" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
