@@ -1,4 +1,5 @@
-﻿using music.data.Interfaces;
+﻿using commons;
+using music.data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,29 @@ using System.Threading.Tasks;
 
 namespace music.data.Daos
 {
-    public class SongDao : IGeneric<Song>
+    public class SongDao : ISong
     {
-        public bool Delete(int id)
+        public Response Delete(int id)
         {
-            throw new NotImplementedException();
+            if (id > 0)
+            {
+                try
+                {
+                    using (musicDBEntities db = new musicDBEntities())
+                    {
+                        Song songToDelete = db.Song.Find(id);
+                        db.Song.Attach(songToDelete);
+                        db.Song.Remove(songToDelete);
+                        db.SaveChanges();
+                    }
+                    return new Response(true, "Song was delete from DB");
+                }
+                catch (Exception e)
+                {
+                    return new Response(false, "Somethig was wrong. Exception: " + e.Message);
+                }
+            }
+            return new Response(false, "Id must be grater than 0");
         }
 
         public Song FindById(int id)
@@ -24,30 +43,55 @@ namespace music.data.Daos
             return response;
         }
 
-        public bool Insert(Song newObject)
+        public Response Insert(Song newObject)
         {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<Song> SelectAll()
-        {            
-            using (musicDBEntities db = new musicDBEntities())
+            if (newObject != null)
             {
-                return db.Song;
-            }            
+                try
+                {
+                    using (musicDBEntities db = new musicDBEntities())
+                    {
+                        db.Song.Add(newObject);
+                        db.SaveChanges();
+                    }
+                    return new Response(true, "Song was inserted in DB");
+                }
+                catch (Exception e)
+                {
+                    return new Response(false, "Somethig was wrong. Exception: " +  e.Message);
+                }
+            }
+            return new Response(false, "Song cannot be null");
         }
 
-        public bool Update(Song updatedObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Song> SelectAll2()
+        public IEnumerable<Song> SelectAll()
         {
             using (musicDBEntities db = new musicDBEntities())
             {
                 return db.Song.ToList();
             }
+        }
+
+        public Response Update(Song updatedObject)
+        {
+            if (updatedObject != null)
+            {
+                try
+                {
+                    using (musicDBEntities db = new musicDBEntities())
+                    {                        
+                        db.Song.Attach(updatedObject);
+                        db.Entry(updatedObject).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    return new Response(true, "Song was updated");
+                }
+                catch (Exception e)
+                {
+                    return new Response(false, "Somethig was wrong. Exception: " + e.Message);
+                }
+            }
+            return new Response(false, "Song to update cannot be null");
         }
     }
 }

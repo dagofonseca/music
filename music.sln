@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "music.biz", "music.biz\musi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "music.dataTests", "music.dataTests\music.dataTests.csproj", "{D074E1B4-9575-47FB-8191-0A67555B011A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons", "commons\commons.csproj", "{0E56226D-78FE-4DB2-8669-C7B9B15558BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D074E1B4-9575-47FB-8191-0A67555B011A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D074E1B4-9575-47FB-8191-0A67555B011A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D074E1B4-9575-47FB-8191-0A67555B011A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E56226D-78FE-4DB2-8669-C7B9B15558BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E56226D-78FE-4DB2-8669-C7B9B15558BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E56226D-78FE-4DB2-8669-C7B9B15558BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E56226D-78FE-4DB2-8669-C7B9B15558BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using music.data.Interfaces;
+﻿using commons;
+using music.data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace music.data.Daos
 {
     class AlbumDao : IAlbum
     {
-        public bool Delete(int id)
+        public Response Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -19,17 +20,17 @@ namespace music.data.Daos
             throw new NotImplementedException();
         }
 
-        public bool Insert(Album newObject)
+        public Response Insert(Album newObject)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Album> SelectAll()
+        public IEnumerable<Album> SelectAll()
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Album updatedObject)
+        public Response Update(Album updatedObject)
         {
             throw new NotImplementedException();
         }

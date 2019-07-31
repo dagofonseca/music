@@ -20,3 +20,5 @@ C:\Users\dago.fonseca\source\repos\music\music.dataTests\obj\Debug\music.dataTes
 C:\Users\dago.fonseca\source\repos\music\music.dataTests\bin\Debug\music.dataTests.dll.config
 C:\Users\dago.fonseca\source\repos\music\music.dataTests\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\dago.fonseca\source\repos\music\music.dataTests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\dago.fonseca\source\repos\music\music.dataTests\bin\Debug\commons.dll
+C:\Users\dago.fonseca\source\repos\music\music.dataTests\bin\Debug\commons.pdb

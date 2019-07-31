@@ -10,3 +10,5 @@ C:\Users\dago.fonseca\source\repos\music\music.data\obj\Debug\music.data.csproj.
 C:\Users\dago.fonseca\source\repos\music\music.data\obj\Debug\music.data.csproj.CopyComplete
 C:\Users\dago.fonseca\source\repos\music\music.data\obj\Debug\music.data.dll
 C:\Users\dago.fonseca\source\repos\music\music.data\obj\Debug\music.data.pdb
+C:\Users\dago.fonseca\source\repos\music\music.data\bin\Debug\commons.dll
+C:\Users\dago.fonseca\source\repos\music\music.data\bin\Debug\commons.pdb
