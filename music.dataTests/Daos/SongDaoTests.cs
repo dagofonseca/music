@@ -133,7 +133,7 @@ namespace music.data.Daos.Tests
                 genre = "ranchera",
                 relesed = 1963,
                 fk_album_id = 4,
-                fk_artist_id = 2
+                fk_artist_id = 2                
             };
             SongDao songDao = new SongDao();
             songDao.Insert(newSong);
