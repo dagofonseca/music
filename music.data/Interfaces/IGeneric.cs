@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace music.data.Interfaces
 {
-    interface IGeneric<T>
+    public interface IGeneric<T>
     {
         Response Insert(T newObject);
         Response Delete(int id);

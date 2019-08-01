@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace music.data.Daos
 {
-    class ArtistDao : IArtist
+    public class ArtistDao : IArtist
     {
         public Response Delete(int id)
         {

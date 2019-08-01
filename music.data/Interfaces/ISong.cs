@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace music.data.Interfaces
 {
-    interface ISong : IGeneric<Song>
+    public interface ISong : IGeneric<Song>
     {
     }
 }

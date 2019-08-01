@@ -41,14 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Implementations\AlbumManager.cs" />
+    <Compile Include="Implementations\ArtistManager.cs" />
+    <Compile Include="Implementations\SongManager.cs" />
+    <Compile Include="Interfaces\IAlbumBiz.cs" />
+    <Compile Include="Interfaces\IArtistBiz.cs" />
     <Compile Include="Interfaces\IGenericBiz.cs" />
+    <Compile Include="Interfaces\ISongBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Implementations\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\commons\commons.csproj">
+      <Project>{0E56226D-78FE-4DB2-8669-C7B9B15558BB}</Project>
+      <Name>commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\music.data\music.data.csproj">
       <Project>{d685c2b6-47f0-4926-9b2a-c4572d12aef3}</Project>
       <Name>music.data</Name>

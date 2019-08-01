@@ -158,5 +158,18 @@ namespace music.data.Daos.Tests
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
         }
+
+        [TestMethod()]
+        public void DeleteIdNoExistTest()
+        {
+            SongDao songDao = new SongDao();
+            int id = 10000;
+            var actual = songDao.Delete(id);
+
+            var expected = new Response(false);
+            Console.WriteLine(actual.Message);
+
+            Assert.AreEqual(expected.Status, actual.Status);            
+        }
     }
 }
