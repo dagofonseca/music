@@ -13,7 +13,12 @@ namespace music.biz.Implementations
 {
     public class AlbumManager : IAlbumBiz
     {
-        readonly IAlbum dal = new AlbumDao();
+        private readonly IAlbum dal;
+
+        public AlbumManager(IAlbum implementation)
+        {
+            dal = implementation;
+        }
         public Response Create(Album newObject)
         {
             try
@@ -29,6 +34,12 @@ namespace music.biz.Implementations
                 return new Response(false, "Something was wrong. Exceptino : " + e.Message);
             }
         }
+
+        public IEnumerable<Album> Show()
+        {
+            return dal.SelectAll();
+        }
+
         private bool ValidateName(Album ob)
         {
             bool response = !String.IsNullOrWhiteSpace(ob.name);

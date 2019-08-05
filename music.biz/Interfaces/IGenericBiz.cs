@@ -10,5 +10,6 @@ namespace music.biz.Interfaces
     public interface IGenericBiz<T>
     {
         Response Create (T newObject);
+        IEnumerable<T> Show();
     }
 }

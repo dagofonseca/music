@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using commons;
 
 namespace music.data.Interfaces
 {
-    public interface IAlbum : IGeneric<Album>
+    public interface IAlbum : IGeneric<AlbumDto>
     {        
     }
 }

@@ -1,18 +1,14 @@
 ﻿using commons;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.data.Interfaces
 {
     public interface IGeneric<T>
     {
-        Response Insert(T newObject);
-        Response Delete(int id);
-        Response Update(T updatedObject);
-        T FindById(int id);
-        IEnumerable<T> SelectAll();
+        Response<int> Insert(T newObject);
+        Response<int> Delete(int id);
+        Response<int> Update(T updatedObject);
+        Response<T> FindById(int id);
+        Response<IEnumerable<T>> SelectAll();
     }
 }

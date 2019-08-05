@@ -13,9 +13,26 @@ namespace music.biz.Implementations
 {
     public class SongManager : ISongBiz
     {
-        readonly ISong dal = new SongDao();
-        readonly IAlbum dalAlb = new AlbumDao();
-        readonly IArtist dalArt = new ArtistDao();
+        private readonly ISong dal;
+        private readonly IAlbum dalAlb;
+        private readonly IArtist dalArt;
+
+        public SongManager(ISong songDal, IAlbum albumDal, IArtist artistDal)
+        {
+            dal = songDal;
+            dalAlb = albumDal;
+            dalArt = artistDal;
+        }
+
+        public IEnumerable<Song> Show()
+        {
+            return dal.SelectAll();
+        }
+
+        public IEnumerable<Song> ShowByArtist(int artistId)
+        {
+            return dal.SelectSongsByArtist(artistId);
+        }
 
         public Response Create(Song newObject)
         {
@@ -26,6 +43,7 @@ namespace music.biz.Implementations
             }
             return resp;
         }
+
 
         private Response ValidateSong(Song ob)
         {
@@ -58,7 +76,9 @@ namespace music.biz.Implementations
         }
         private bool ValidateReleased(Song ob)
         {
-            int albumYear = ob.Album.relesed;
+            int albumId = ob.fk_album_id.GetValueOrDefault();
+            Album album = dalAlb.FindById(albumId);
+            int albumYear = album.relesed;
             int songYear = ob.relesed;
 
             return songYear <= albumYear;
@@ -66,13 +86,17 @@ namespace music.biz.Implementations
 
         private bool ValidateArtist(Song ob)
         {
-            Artist artist = dalArt.FindById(ob.Artist.artist_id);
+            int artistId = ob.fk_artist_id.GetValueOrDefault();
+            Artist artist = dalArt.FindById(artistId);
+
             return artist != null;
         }
         private bool ValidateAlbum(Song ob)
         {
-            Album album = dalAlb.FindById(ob.Album.album_id);
+            int albumId = ob.fk_album_id.GetValueOrDefault();
+            Album album = dalAlb.FindById(albumId);
+
             return album != null;
-        }        
+        }                
     }
 }

@@ -1,6 +1,5 @@
 C:\Users\dago.fonseca\source\repos\music\commons\bin\Debug\commons.dll
 C:\Users\dago.fonseca\source\repos\music\commons\bin\Debug\commons.pdb
-C:\Users\dago.fonseca\source\repos\music\commons\obj\Debug\commons.csprojAssemblyReference.cache
 C:\Users\dago.fonseca\source\repos\music\commons\obj\Debug\commons.csproj.CoreCompileInputs.cache
 C:\Users\dago.fonseca\source\repos\music\commons\obj\Debug\commons.dll
 C:\Users\dago.fonseca\source\repos\music\commons\obj\Debug\commons.pdb

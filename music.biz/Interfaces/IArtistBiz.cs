@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace music.biz.Interfaces
 {
-    interface IArtistBiz : IGenericBiz<Artist>
+    public interface IArtistBiz : IGenericBiz<Artist>
     {
     }
 }

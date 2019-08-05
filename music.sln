@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons", "commons\commons.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "music.bizTests", "music.bizTests\music.bizTests.csproj", "{9F7F90C7-3787-4E56-8FBE-6A44EF42084B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "music.service", "music.service\music.service.csproj", "{0618E0C3-9975-4B70-9C7F-790FC4B92290}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9F7F90C7-3787-4E56-8FBE-6A44EF42084B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7F90C7-3787-4E56-8FBE-6A44EF42084B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7F90C7-3787-4E56-8FBE-6A44EF42084B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0618E0C3-9975-4B70-9C7F-790FC4B92290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0618E0C3-9975-4B70-9C7F-790FC4B92290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0618E0C3-9975-4B70-9C7F-790FC4B92290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0618E0C3-9975-4B70-9C7F-790FC4B92290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

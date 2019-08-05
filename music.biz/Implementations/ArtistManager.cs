@@ -13,7 +13,13 @@ namespace music.biz.Implementations
 {
     public class ArtistManager : IArtistBiz
     {
-        readonly IArtist dal = new ArtistDao();
+        private readonly IArtist dal;
+
+        public ArtistManager(IArtist implementation)
+        {
+            dal = implementation;
+        }
+
         public Response Create(Artist newObject)
         {
             try
@@ -29,6 +35,12 @@ namespace music.biz.Implementations
                 return new Response(false, "Something was wrong. Exceptino : " + e.Message);
             }
         }
+
+        public IEnumerable<Artist> Show()
+        {
+            return dal.SelectAll();
+        }
+
         private bool ValidateName(Artist ob)
         {
             bool response = !String.IsNullOrWhiteSpace(ob.name);

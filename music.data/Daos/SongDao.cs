@@ -58,7 +58,7 @@ namespace music.data.Daos
                 }
                 catch (Exception e)
                 {
-                    return new Response(false, "Somethig was wrong. Exception: " +  e.Message);
+                    return new Response(false, "Somethig was wrong. Exception: " + e.Message);
                 }
             }
             return new Response(false, "Song cannot be null");
@@ -72,6 +72,21 @@ namespace music.data.Daos
             }
         }
 
+        public IEnumerable<Song> SelectSongsByArtist(int artistId)
+        {
+            try
+            {
+                using (musicDBEntities db = new musicDBEntities())
+                {
+                    return db.Song.Where(s => s.fk_artist_id == artistId).ToList();
+                }
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
+
         public Response Update(Song updatedObject)
         {
             if (updatedObject != null)
@@ -79,7 +94,7 @@ namespace music.data.Daos
                 try
                 {
                     using (musicDBEntities db = new musicDBEntities())
-                    {                        
+                    {
                         db.Song.Attach(updatedObject);
                         db.Entry(updatedObject).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();

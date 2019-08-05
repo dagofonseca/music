@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace music.biz.Interfaces
 {
-    interface ISongBiz : IGenericBiz<Song>
+    public interface ISongBiz : IGenericBiz<Song>
     {
+        IEnumerable<Song> ShowByArtist(int artistId);
     }
 }
