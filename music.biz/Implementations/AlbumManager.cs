@@ -1,17 +1,12 @@
 ﻿using commons;
 using music.biz.Interfaces;
-using music.data;
-using music.data.Daos;
 using music.data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.biz.Implementations
 {
-    public class AlbumManager
+    public class AlbumManager : IAlbumBiz
     {
         private readonly IAlbum dal;
 
@@ -19,40 +14,43 @@ namespace music.biz.Implementations
         {
             dal = implementation;
         }
-        public Response<int> Create(Album newObject)
+        public Response<AlbumDto> Create(AlbumDto newObject)
         {
             try
             { 
                 if (newObject != null && ValidateName(newObject) && ValidateReleased(newObject))
                 {
-                    //return dal.Insert(newObject);
-                    return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
+                    Response<int> dataResponse = dal.Insert(newObject);
+                    newObject.Id = dataResponse.Data;
+                    return new Response<AlbumDto>(dataResponse.Status, dataResponse.Message, newObject);
                 }
-                return new Response<int>(false, "Object Null or Album Name or Year release aren't valid.", 1000);
+                return new Response<AlbumDto>(false, "Object Null or Album Name or Year release aren't valid.", null);
             }
             catch(Exception e)
             {
-                return new Response<int>(false, "Something was wrong. Exceptino : " + e.Message,1000);
+                if (e.InnerException == null)
+                    return new Response<AlbumDto>(false, "Somethig was wrong. Exception: " + e.Message, null);
+                else
+                    return new Response<AlbumDto>(false, "Somethig was wrong. Exception: " + e.InnerException.InnerException.Message, null);
             }
         }
 
-        public IEnumerable<Album> Show()
+        public Response<IEnumerable<AlbumDto>> Show()
         {
-            //return dal.SelectAll();
-            return null;
+            return dal.SelectAll();            
         }
 
-        private bool ValidateName(Album ob)
+        private bool ValidateName(AlbumDto album)
         {
-            bool response = !String.IsNullOrWhiteSpace(ob.name);
+            bool response = !String.IsNullOrWhiteSpace(album.Name);
 
             return response;
         }
 
-        private bool ValidateReleased(Album ob)
+        private bool ValidateReleased(AlbumDto album)
         {
             int currentYear = DateTimeOffset.Now.Year;
-            int albumYear = ob.relesed;
+            int albumYear = album.Released;
 
             bool response = albumYear <= currentYear;
 

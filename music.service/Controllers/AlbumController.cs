@@ -21,20 +21,9 @@ namespace music.service.Controllers
         }
 
         // GET: api/Album
-        public IEnumerable<AlbumDto> Get()
+        public Response<IEnumerable<AlbumDto>> Get()
         {
-            List<Album> albums = bizLogic.Show().ToList();
-            List<AlbumDto> response = new List<AlbumDto>();
-            foreach (Album album in albums)
-            {
-                AlbumDto aux = new AlbumDto();
-                aux.Id = album.album_id;
-                aux.Name = album.name;
-                aux.Released = album.relesed;
-
-                response.Add(aux);
-            }
-            return response;
+            return bizLogic.Show();            
         }
 
         // GET: api/Album/5

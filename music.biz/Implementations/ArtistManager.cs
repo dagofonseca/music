@@ -1,17 +1,12 @@
 ﻿using commons;
 using music.biz.Interfaces;
-using music.data;
-using music.data.Daos;
 using music.data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.biz.Implementations
 {
-    public class ArtistManager 
+    public class ArtistManager : IArtistBiz
     {
         private readonly IArtist dal;
 
@@ -20,32 +15,36 @@ namespace music.biz.Implementations
             dal = implementation;
         }
 
-        public Response<int> Create(Artist newObject)
+        public Response<ArtistDto> Create(ArtistDto newObject)
         {
             try
             {
                 if (newObject != null && ValidateName(newObject) )
                 {
-                    //return dal.Insert(newObject);
-                    return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
+                    Response<int> dataResponse = dal.Insert(newObject);
+                    newObject.Id = dataResponse.Data;
+
+                    return new Response<ArtistDto>(dataResponse.Status, dataResponse.Message, newObject);
                 }
-                return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
+                return new Response<ArtistDto>(false, "Artist Null or Artist Name isn't valid.", null);
             }
             catch (Exception e)
             {
-                return new Response<int>(false, "Something was wrong. Exceptino : " + e.Message,1000);
+                if (e.InnerException == null)
+                    return new Response<ArtistDto>(false, "Somethig was wrong. Exception: " + e.Message, null);
+                else
+                    return new Response<ArtistDto>(false, "Somethig was wrong. Exception: " + e.InnerException.InnerException.Message, null);
             }
         }
 
-        public IEnumerable<ArtistDto> Show()
+        public Response<IEnumerable<ArtistDto>> Show()
         {
-            //return dal.SelectAll();
-            return null;
+            return dal.SelectAll();
         }
 
-        private bool ValidateName(Artist ob)
+        private bool ValidateName(ArtistDto artist)
         {
-            bool response = !String.IsNullOrWhiteSpace(ob.name);
+            bool response = !String.IsNullOrWhiteSpace(artist.Name);
 
             return response;
         }

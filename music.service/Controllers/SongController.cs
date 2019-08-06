@@ -20,44 +20,15 @@ namespace music.service.Controllers
             bizLogic = implementation;
         }
         // GET: api/Song
-        //public IEnumerable<Song> Get()
-        //{
-        //    IEnumerable<Song> songs = bizLogic.Show();
-        //    //return new JavaScriptSerializer().Serialize(songs);
-        //    return songs;
-        //}
-
-        public SongDto Get()
+        public Response<IEnumerable<SongDto>> Get()
         {
-            Song song = bizLogic.Show().First();
-            SongDto response = new SongDto();
-
-            response.Id = song.song_id;
-            response.Title = song.title;
-            response.Genre = song.genre;
-            response.Released = song.relesed;
-            response.AlbumId = song.fk_album_id.GetValueOrDefault();
-            response.ArtistId = song.fk_artist_id.GetValueOrDefault();
-
-            return response;
+            return bizLogic.Show();
         }
 
-        
         [Route("api/artist/{artistId}/songs")]
-        public IEnumerable<SongDto> GetByArtist(int artistId)
+        public Response<IEnumerable<SongDto>> GetByArtist(int artistId)
         {
-            List<Song> songs = bizLogic.ShowByArtist(artistId).ToList();
-            List<SongDto> response = new List<SongDto>();
-            foreach (Song song in songs)
-            {
-                SongDto aux = new SongDto();
-                aux.Id = song.song_id;
-                aux.Title = song.title;
-                aux.Released = song.relesed;
-                aux.Genre = song.genre;
-                response.Add(aux);
-            }
-            return response;
+            return bizLogic.ShowByArtist(artistId);            
         }
 
         // GET: api/Song/5

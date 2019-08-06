@@ -22,18 +22,9 @@ namespace music.service.Controllers
         }
 
         // GET: api/Artist
-        public IEnumerable<ArtistDto> Get()
+        public Response<IEnumerable<ArtistDto>> Get()
         {
-            List<Artist> artists = bizLogic.Show().ToList();
-            List<ArtistDto> response = new List<ArtistDto>();
-            foreach (Artist artist in artists)
-            {
-                ArtistDto aux = new ArtistDto();
-                aux.Id = artist.artist_id;
-                aux.Name = artist.name;
-                response.Add(aux);
-            }
-            return response;
+            return bizLogic.Show();            
         }
 
         // GET: api/Artist/5

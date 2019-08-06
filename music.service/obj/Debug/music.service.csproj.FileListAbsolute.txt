@@ -82,3 +82,6 @@ C:\Users\dago.fonseca\source\repos\music\music.service\bin\WebActivatorEx.dll
 C:\Users\dago.fonseca\source\repos\music\music.service\bin\Ninject.Web.Common.xml
 C:\Users\dago.fonseca\source\repos\music\music.service\bin\Ninject.Web.Common.WebHost.xml
 C:\Users\dago.fonseca\source\repos\music\music.service\bin\WebApiContrib.IoC.Ninject.dll
+C:\Users\dago.fonseca\source\repos\music\music.service\bin\System.Web.Cors.dll
+C:\Users\dago.fonseca\source\repos\music\music.service\bin\System.Web.Http.Cors.dll
+C:\Users\dago.fonseca\source\repos\music\music.service\bin\System.Web.Http.Cors.xml

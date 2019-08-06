@@ -106,7 +106,7 @@ namespace music.data.Daos
                         response.Add(aux);
                     }
                 }
-                return new Response<IEnumerable<ArtistDto>>(true, response.Count + " albums found", response);
+                return new Response<IEnumerable<ArtistDto>>(true, response.Count + " artists found", response);
             }
             catch (Exception e)
             {

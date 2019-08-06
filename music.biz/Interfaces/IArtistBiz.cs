@@ -1,13 +1,8 @@
-﻿using music.data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using commons;
 
 namespace music.biz.Interfaces
 {
-    public interface IArtistBiz : IGenericBiz<Artist>
+    public interface IArtistBiz : IGenericBiz<ArtistDto>
     {
     }
 }

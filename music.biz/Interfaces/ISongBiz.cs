@@ -1,14 +1,10 @@
-﻿using music.data;
-using System;
+﻿using commons;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.biz.Interfaces
 {
-    public interface ISongBiz : IGenericBiz<Song>
+    public interface ISongBiz : IGenericBiz<SongDto>
     {
-        IEnumerable<Song> ShowByArtist(int artistId);
+        Response<IEnumerable<SongDto>> ShowByArtist(int artistId);
     }
 }
