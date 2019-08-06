@@ -65,9 +65,11 @@ namespace music.data.Daos
             if (newObject == null)
                 return new Response<int>(false, "Album cannot be null", -1);
 
-            Album album = new Album();
-            album.name = newObject.Name;
-            album.relesed = newObject.Released;
+            Album album = new Album
+            {
+                name = newObject.Name,
+                relesed = newObject.Released
+            };
 
             try
             {
@@ -91,32 +93,65 @@ namespace music.data.Daos
 
         public Response<IEnumerable<AlbumDto>> SelectAll()
         {
-            using (musicDBEntities db = new musicDBEntities())
+            List<AlbumDto> response = new List<AlbumDto>();
+            try
             {
-                return db.Album.ToList();
+                using (musicDBEntities db = new musicDBEntities())
+                {
+                    List<Album> albums = db.Album.ToList();
+
+                    foreach (Album album in albums)
+                    {
+                        AlbumDto aux = new AlbumDto();
+                        aux.Id = album.album_id;
+                        aux.Name = album.name;
+                        aux.Released = album.relesed;
+                        response.Add(aux);
+                    }
+                }
+                return new Response<IEnumerable<AlbumDto>>(true, response.Count + " albums found", response);
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException == null)
+                    return new Response<IEnumerable<AlbumDto>>(false, "Somethig was wrong. Exception: " + e.Message, response);
+                else
+                    return new Response<IEnumerable<AlbumDto>>(false, "Somethig was wrong. Exception: " + e.InnerException.InnerException.Message, response);
+
             }
         }
 
         public Response<int> Update(AlbumDto updatedObject)
         {
-            if (updatedObject != null)
+            if (updatedObject == null)
+                return new Response<int>(false, "Album to update cannot be null", -1);
+
+            try
             {
-                try
+                
+                using (musicDBEntities db = new musicDBEntities())
                 {
-                    using (musicDBEntities db = new musicDBEntities())
-                    {
-                        db.Album.Attach(updatedObject);
-                        db.Entry(updatedObject).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                    return new Response(true, "Album was updated");
+                    Album albumToUpdate = db.Album.Find(updatedObject.Id);
+
+                    if (albumToUpdate == null)
+                        return new Response<int>(false, "Album to update isn't in the database", -1);
+
+                    albumToUpdate.name = updatedObject.Name;
+                    albumToUpdate.relesed = updatedObject.Released;                    
+
+                    db.Album.Attach(albumToUpdate);
+                    db.Entry(albumToUpdate).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
                 }
-                catch (Exception e)
-                {
-                    return new Response(false, "Somethig was wrong. Exception: " + e.Message);
-                }
+                return new Response<int>(true, "Album was updated", updatedObject.Id);
             }
-            return new Response(false, "Album to update cannot be null");
+            catch (Exception e)
+            {
+                if (e.InnerException == null)
+                    return new Response<int>(false, "Somethig was wrong. Exception: " + e.Message, -1);
+                else
+                    return new Response<int>(false, "Somethig was wrong. Exception: " + e.InnerException.InnerException.Message, -1);
+            }
         }
     }
 }

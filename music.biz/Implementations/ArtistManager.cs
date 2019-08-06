@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace music.biz.Implementations
 {
-    public class ArtistManager : IArtistBiz
+    public class ArtistManager 
     {
         private readonly IArtist dal;
 
@@ -20,25 +20,27 @@ namespace music.biz.Implementations
             dal = implementation;
         }
 
-        public Response Create(Artist newObject)
+        public Response<int> Create(Artist newObject)
         {
             try
             {
                 if (newObject != null && ValidateName(newObject) )
                 {
-                    return dal.Insert(newObject);
+                    //return dal.Insert(newObject);
+                    return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
                 }
-                return new Response(false, "Artist Null or Artist Name isn't valid.");
+                return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
             }
             catch (Exception e)
             {
-                return new Response(false, "Something was wrong. Exceptino : " + e.Message);
+                return new Response<int>(false, "Something was wrong. Exceptino : " + e.Message,1000);
             }
         }
 
-        public IEnumerable<Artist> Show()
+        public IEnumerable<ArtistDto> Show()
         {
-            return dal.SelectAll();
+            //return dal.SelectAll();
+            return null;
         }
 
         private bool ValidateName(Artist ob)

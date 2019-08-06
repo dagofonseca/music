@@ -9,7 +9,7 @@ namespace music.biz.Interfaces
 {
     public interface IGenericBiz<T>
     {
-        Response Create (T newObject);
+        Response<T> Create (T newObject);
         IEnumerable<T> Show();
     }
 }

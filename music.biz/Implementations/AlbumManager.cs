@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace music.biz.Implementations
 {
-    public class AlbumManager : IAlbumBiz
+    public class AlbumManager
     {
         private readonly IAlbum dal;
 
@@ -19,25 +19,27 @@ namespace music.biz.Implementations
         {
             dal = implementation;
         }
-        public Response Create(Album newObject)
+        public Response<int> Create(Album newObject)
         {
             try
             { 
                 if (newObject != null && ValidateName(newObject) && ValidateReleased(newObject))
                 {
-                    return dal.Insert(newObject);
+                    //return dal.Insert(newObject);
+                    return new Response<int>(false, "Artist Null or Artist Name isn't valid.", 1000);
                 }
-                return new Response(false, "Object Null or Album Name or Year release aren't valid.");
+                return new Response<int>(false, "Object Null or Album Name or Year release aren't valid.", 1000);
             }
             catch(Exception e)
             {
-                return new Response(false, "Something was wrong. Exceptino : " + e.Message);
+                return new Response<int>(false, "Something was wrong. Exceptino : " + e.Message,1000);
             }
         }
 
         public IEnumerable<Album> Show()
         {
-            return dal.SelectAll();
+            //return dal.SelectAll();
+            return null;
         }
 
         private bool ValidateName(Album ob)
