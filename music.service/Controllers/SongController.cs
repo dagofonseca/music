@@ -32,9 +32,9 @@ namespace music.service.Controllers
         }
 
         // GET: api/Song/5
-        public string Get(int id)
+        public Response<SongDto> Get(int id)
         {
-            return "value";
+            return bizLogic.ShowById(id);
         }
 
         // POST: api/Song

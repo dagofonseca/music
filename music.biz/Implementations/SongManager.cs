@@ -47,6 +47,10 @@ namespace music.biz.Implementations
             return resp;
         }
 
+        public Response<SongDto> ShowById(int id)
+        {
+            return dal.FindById(id);
+        }
 
         private Response<SongDto> ValidateSong(SongDto song)
         {

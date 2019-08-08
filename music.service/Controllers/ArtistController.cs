@@ -28,9 +28,11 @@ namespace music.service.Controllers
         }
 
         // GET: api/Artist/5
-        public string Get(int id)
+        
+
+        public Response<ArtistDto> Get(int id)
         {
-            return "value";
+            return bizLogic.ShowById(id);
         }
 
         // POST: api/Artist

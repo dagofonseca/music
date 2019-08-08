@@ -40,6 +40,11 @@ namespace music.biz.Implementations
             return dal.SelectAll();            
         }
 
+        public Response<AlbumDto> ShowById(int id)
+        {
+            return dal.FindById(id);
+        }
+
         private bool ValidateName(AlbumDto album)
         {
             bool response = !String.IsNullOrWhiteSpace(album.Name);

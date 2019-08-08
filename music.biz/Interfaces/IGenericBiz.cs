@@ -11,5 +11,6 @@ namespace music.biz.Interfaces
     {
         Response<T> Create (T newObject);
         Response<IEnumerable<T>> Show();
+        Response<T> ShowById(int id);
     }
 }

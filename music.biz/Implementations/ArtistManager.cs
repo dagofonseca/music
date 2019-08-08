@@ -37,6 +37,11 @@ namespace music.biz.Implementations
             }
         }
 
+        public Response<ArtistDto> ShowById(int id)
+        {
+            return dal.FindById(id);
+        }
+
         public Response<IEnumerable<ArtistDto>> Show()
         {
             return dal.SelectAll();
