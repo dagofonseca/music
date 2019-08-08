@@ -1,149 +1,189 @@
 ﻿using commons;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using music.data.Daos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.data.Daos.Tests
 {
     [TestClass()]
     public class SongDaoTests
     {
+        #region FindTests
         [TestMethod()]
         public void FindByIdTest()
         {
             SongDao songDao = new SongDao();
-            Song actual = songDao.FindById(2);
-            string expected = "bohemio de aficion";
+            SongDto responseSong = new SongDto
+            {
+                Id = 2,
+                Title = "bohemio de aficion edit",
+                Released = 1998,
+                Genre = "ranchera"
+            };
+            responseSong.SetAlbumId(1);
+            responseSong.SetArtistId(1);
 
-            Assert.AreEqual(expected, actual.title);
+            Response<SongDto> expected = new Response<SongDto>(true, "Song was find", responseSong);
+            Response<SongDto> actual = songDao.FindById(2);
+
+            Assert.AreEqual(expected.Status, actual.Status);
+            Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreEqual(expected.Data.Title, actual.Data.Title);
+
         }
 
         [TestMethod()]
         public void FindByIdThatNoExistTest()
         {
             SongDao songDao = new SongDao();
-            Song actual = songDao.FindById(1000);
 
-            Assert.AreEqual(null, actual);
+            Response<SongDto> expected = new Response<SongDto>(false, "Somethig was wrong. Exception: ", null);
+            Response<SongDto> actual = songDao.FindById(1000);
+
+            bool IsRightMessgage = actual.Message.StartsWith(expected.Message);
+
+            Assert.AreEqual(expected.Status, actual.Status);
+            Assert.AreEqual(expected.Data, actual.Data);
+            Assert.AreEqual(true, IsRightMessgage);
         }
 
         [TestMethod()]
         public void SelectAllTest()
         {
             SongDao songDao = new SongDao();
-            List<Song> actual = songDao.SelectAll().ToList<Song>();
-            string expected2 = "bohemio de aficion";
-            string expected7 = "las rejas no matan";
-            string expected10 = "payaso";
 
-            Assert.AreEqual(expected2, actual[1].title);
-            Assert.AreEqual(expected7, actual[6].title);
-            Assert.AreEqual(expected10, actual[9].title);
+            String expectedMessage = "23 Songs found";
+            String expectedSecondTitle = "me voy a quitar de en medio";
+            Response<IEnumerable<SongDto>> actual = songDao.SelectAll();
+
+            Assert.AreEqual(true, actual.Status);
+            Assert.AreEqual(expectedMessage, actual.Message);
+            Assert.AreEqual(expectedSecondTitle, actual.Data.ElementAt(1).Title);
         }
+        #endregion
 
+        #region InsertTests
         [TestMethod()]
         public void InsertTest()
         {
-            Song newSong = new Song()
+            SongDto newSong = new SongDto()
             {
-                title = "cataclismo",
-                genre = "ranchera",
-                relesed = 1963,
-                fk_album_id = 4,
-                fk_artist_id = 2
+                Title = "xyz cataclismo xyz",
+                Genre = "ranchera",
+                Released = 1963
             };
-            SongDao songDao = new SongDao();
-            var actual = songDao.Insert(newSong);
+            newSong.SetAlbumId(4);
+            newSong.SetArtistId(2);
 
-            var expected = new Response(true, "Song was inserted in DB");
+            SongDao songDao = new SongDao();
+
+            Response<int> expected = new Response<int>(true, "Song was inserted in DB", 0);
+            Response<int> actual = songDao.Insert(newSong);
+
+            Console.WriteLine(actual.Data);
 
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreNotEqual(-1, actual.Data);
         }
 
         [TestMethod()]
         public void InsertThrowExceptionTest()
         {
-            Song newSong = new Song()
+            SongDto newSong = new SongDto()
             {
-                title = null,
-                genre = "ranchera",
-                relesed = 1963,
-                fk_album_id = 4,
-                fk_artist_id = 2
+                Title = null,
+                Genre = "ranchera",
+                Released = 1963
             };
+            newSong.SetAlbumId(4);
+            newSong.SetArtistId(2);
             SongDao songDao = new SongDao();
-            var actual = songDao.Insert(newSong);
 
-            var expected = new Response(false);
+            Response<int> expected = new Response<int>(false, "Somethig was wrong. Exception: ", -1);
+            Response<int> actual = songDao.Insert(newSong);
+
+            bool IsRightMessage = actual.Message.StartsWith(expected.Message);
 
             Assert.AreEqual(expected.Status, actual.Status);
+            Assert.AreEqual(expected.Data, actual.Data);
+            Assert.AreEqual(true, IsRightMessage);
         }
 
         [TestMethod()]
         public void InsertNullTest()
         {
-            Song newSong = null;
+            SongDto newSong = null;
             SongDao songDao = new SongDao();
-            var actual = songDao.Insert(newSong);
 
-            var expected = new Response(false, "Song cannot be null");
+            Response<int> expected = new Response<int>(false, "Song cannot be null", -1);
+            Response<int> actual = songDao.Insert(newSong);
 
             Assert.AreEqual(expected.Status, actual.Status);
+            Assert.AreEqual(expected.Data, actual.Data);
             Assert.AreEqual(expected.Message, actual.Message);
         }
+        #endregion
+
+        #region UpdateTests
 
         [TestMethod()]
         public void UpdateTest()
         {
             SongDao songDao = new SongDao();
-            Song song = songDao.SelectAll().First();
-            song.title = song.title + " edit";
-            var actual = songDao.Update(song);
+            SongDto song = songDao.SelectAll().Data.First(s => s.Title == "xyz cataclismo xyz");
+            song.Genre = "rock";
 
-            var expected = new Response(true, "Song was updated");
+            Response<int> expected = new Response<int>(true, "Song was updated", song.Id);
+            Response<int> actual = songDao.Update(song);
 
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreEqual(expected.Data, actual.Data);
         }
 
         [TestMethod()]
         public void UpdateNullTest()
         {
             SongDao songDao = new SongDao();
-            Song song = null;
-            var actual = songDao.Update(song);
+            SongDto song = null;
 
-            var expected = new Response(false, "Song to update cannot be null");
+            var expected = new Response<int>(false, "Song to update cannot be null", -1);
+            var actual = songDao.Update(song);
 
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreEqual(expected.Data, actual.Data);
         }
+
+        #endregion
+
+        #region DeleteTests
 
         [TestMethod()]
         public void DeleteTest()
-        {            
-            Song newSong = new Song()
-            {
-                title = "xxyyzz55",
-                genre = "ranchera",
-                relesed = 1963,
-                fk_album_id = 4,
-                fk_artist_id = 2
-            };
+        {
             SongDao songDao = new SongDao();
-            songDao.Insert(newSong);
-            var song = songDao.SelectAll().First(s => s.title == "xxyyzz55");            
-            var actual = songDao.Delete(song.song_id);
+            SongDto song = songDao.SelectAll().Data.First(s => s.Title == "xyz cataclismo xyz");
+            if (song == null)
+            {
+                song.Title = "xyz cataclismo xyz";
+                song.Genre = "ranchera";
+                song.Released = 1963;
+                song.SetAlbumId(4);
+                song.SetArtistId(2);
 
-            var expected = new Response(true, "Song was delete from DB");
+                int id = songDao.Insert(song).Data;
+                song.Id = id;
+            }
+
+            Response<int> expected = new Response<int>(true, "Song was delete from DB", song.Id);
+            Response<int> actual = songDao.Delete(song.Id);
 
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreEqual(expected.Data, actual.Data);
         }
 
         [TestMethod()]
@@ -151,12 +191,31 @@ namespace music.data.Daos.Tests
         {
             SongDao songDao = new SongDao();
             int id = 0;
-            var actual = songDao.Delete(id);
 
-            var expected = new Response(false, "Id must be grater than 0");
+            Response<int> expected = new Response<int>(false, "Id must be grater than 0", -1);
+            Response<int> actual = songDao.Delete(id);
 
             Assert.AreEqual(expected.Status, actual.Status);
             Assert.AreEqual(expected.Message, actual.Message);
+            Assert.AreEqual(expected.Data, actual.Data);
         }
+
+        [TestMethod()]
+        public void DeleteIdNoExistTest()
+        {
+            SongDao songDao = new SongDao();
+            int id = 10000;
+
+            Response<int> expected = new Response<int>(false, "Somethig was wrong. Exception: ", -1);
+            Response<int> actual = songDao.Delete(id);
+
+            bool IsRightMessage = actual.Message.StartsWith(expected.Message);
+
+            Assert.AreEqual(expected.Status, actual.Status);
+            Assert.AreEqual(expected.Data, actual.Data);
+            Assert.AreEqual(true, IsRightMessage);
+        }
+
+        #endregion
     }
 }

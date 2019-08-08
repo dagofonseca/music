@@ -1,12 +1,10 @@
-﻿using System;
+﻿using commons;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace music.data.Interfaces
 {
-    interface ISong : IGeneric<Song>
+    public interface ISong : IGeneric<SongDto>
     {
+        Response<IEnumerable<SongDto>> SelectSongsByArtist(int artistId);
     }
 }
