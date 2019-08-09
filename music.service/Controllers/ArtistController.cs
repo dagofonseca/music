@@ -36,8 +36,9 @@ namespace music.service.Controllers
         }
 
         // POST: api/Artist
-        public void Post([FromBody]string value)
+        public Response<ArtistDto> Post([FromBody]ArtistDto newObject)
         {
+            return bizLogic.Create(newObject);
         }
 
         // PUT: api/Artist/5

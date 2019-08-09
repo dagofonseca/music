@@ -63,8 +63,8 @@ namespace music.data.Daos
 
         public Response<int> Insert(ArtistDto newObject)
         {
-            if (newObject != null)
-                return new Response<int>(false, "Artist cannot be null", 1000);
+            if (newObject == null)
+                return new Response<int>(false, "Artist cannot be null", -1);
 
             Artist artist = new Artist();
             artist.name = newObject.Name;

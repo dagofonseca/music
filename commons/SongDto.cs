@@ -26,5 +26,15 @@ namespace commons
         {
             ArtistId = value.GetValueOrDefault();
         }
+
+        public SongDto( int id, string title, string genre, int released, int albumId, int artistId)
+        {
+            Id = id;
+            Title = title;
+            Genre = genre;
+            Released = released;
+            AlbumId = albumId;
+            ArtistId = albumId;
+        }
     }
 }

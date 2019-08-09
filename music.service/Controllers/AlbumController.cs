@@ -1,12 +1,6 @@
 ﻿using commons;
-using music.biz.Implementations;
 using music.biz.Interfaces;
-using music.data;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace music.service.Controllers
@@ -33,8 +27,9 @@ namespace music.service.Controllers
         }
 
         // POST: api/Album
-        public void Post([FromBody]string value)
+        public Response<AlbumDto> Post([FromBody]AlbumDto newObject)
         {
+            return bizLogic.Create(newObject);
         }
 
         // PUT: api/Album/5

@@ -41,17 +41,14 @@ namespace music.data.Daos
             if (id <= 0)
                 return new Response<SongDto>(false, "Id must be grater than 0", null);
 
-            SongDto response = new SongDto();
+            SongDto response;
             try
             {
                 using (musicDBEntities db = new musicDBEntities())
                 {
                     Song song = db.Song.Find(id);
-                    response.Id = song.song_id;
-                    response.Title = song.title;
-                    response.Released = song.relesed;
-                    response.SetAlbumId(song.fk_album_id);
-                    response.SetArtistId(song.fk_artist_id);
+                    response = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                                            song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());                    
                 }
                 return new Response<SongDto>(true, "Song was find", response);
             }
@@ -107,15 +104,8 @@ namespace music.data.Daos
 
                     foreach (Song song in songs)
                     {
-                        SongDto aux = new SongDto
-                        {
-                            Id = song.song_id,
-                            Title = song.title,
-                            Genre = song.genre,
-                            Released = song.relesed
-                        };
-                        aux.SetAlbumId(song.fk_album_id);
-                        aux.SetArtistId(song.fk_artist_id);
+                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                                            song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());                       
 
                         response.Add(aux);
                     }
@@ -146,15 +136,8 @@ namespace music.data.Daos
 
                     foreach (Song song in songs)
                     {
-                        SongDto aux = new SongDto
-                        {
-                            Id = song.song_id,
-                            Title = song.title,
-                            Genre = song.genre,
-                            Released = song.relesed
-                        };
-                        aux.SetAlbumId(song.fk_album_id);
-                        aux.SetArtistId(song.fk_artist_id);
+                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                                            song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());
 
                         response.Add(aux);
                     }
