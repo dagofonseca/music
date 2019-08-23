@@ -9,8 +9,8 @@ namespace music.service
             // Web API configuration and services
             
             // Web API routes
-            config.MapHttpAttributeRoutes();
             config.EnableCors();
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

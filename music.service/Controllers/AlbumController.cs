@@ -1,6 +1,8 @@
 ﻿using commons;
 using music.biz.Interfaces;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace music.service.Controllers
@@ -20,10 +22,15 @@ namespace music.service.Controllers
             return bizLogic.Show();            
         }
 
-        // GET: api/Album/5
-        public Response<AlbumDto> Get(int id)
+        // GET: api/Album/5        
+        public HttpResponseMessage Get(int id)
         {
-            return bizLogic.ShowById(id);
+            Response<AlbumDto> album = bizLogic.ShowById(id);
+
+            if (album.Status)
+                return Request.CreateResponse(HttpStatusCode.OK, album);
+
+            return Request.CreateResponse(HttpStatusCode.NotFound, album);
         }
 
         // POST: api/Album
