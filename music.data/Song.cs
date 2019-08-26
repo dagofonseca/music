@@ -16,8 +16,9 @@ namespace music.data
     {
         public int song_id { get; set; }
         public string title { get; set; }
-        public int relesed { get; set; }
+        public int released { get; set; }
         public string genre { get; set; }
+        public System.TimeSpan duration { get; set; }
         public Nullable<int> fk_artist_id { get; set; }
         public Nullable<int> fk_album_id { get; set; }
     

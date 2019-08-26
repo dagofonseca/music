@@ -13,6 +13,7 @@ namespace commons
         public string Title { get; set; }
         public string Genre { get; set; }
         public int Released { get; set; }
+        public TimeSpan Duration { get; set; }
         public int AlbumId { get; private set; }
         public int ArtistId { get; private set; }
         #endregion        
@@ -27,12 +28,13 @@ namespace commons
             ArtistId = value.GetValueOrDefault();
         }
 
-        public SongDto( int id, string title, string genre, int released, int albumId, int artistId)
+        public SongDto( int id, string title, string genre, int released, TimeSpan duration, int albumId, int artistId)
         {
             Id = id;
             Title = title;
             Genre = genre;
             Released = released;
+            Duration = duration;
             AlbumId = albumId;
             ArtistId = albumId;
         }

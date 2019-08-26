@@ -47,7 +47,7 @@ namespace music.data.Daos
                 using (musicDBEntities db = new musicDBEntities())
                 {
                     Song song = db.Song.Find(id);
-                    response = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                    response = new SongDto(song.song_id, song.title, song.genre, song.released, song.duration,
                                             song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());                    
                 }
                 return new Response<SongDto>(true, "Song was find", response);
@@ -70,7 +70,8 @@ namespace music.data.Daos
             {
                 title = newObject.Title,
                 genre = newObject.Genre,
-                relesed = newObject.Released,
+                released = newObject.Released,
+                duration = newObject.Duration,
                 fk_album_id = newObject.AlbumId,
                 fk_artist_id = newObject.ArtistId
             };
@@ -104,7 +105,7 @@ namespace music.data.Daos
 
                     foreach (Song song in songs)
                     {
-                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.released, song.duration,
                                             song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());                       
 
                         response.Add(aux);
@@ -136,7 +137,7 @@ namespace music.data.Daos
 
                     foreach (Song song in songs)
                     {
-                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.relesed,
+                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.released, song.duration,
                                             song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());
 
                         response.Add(aux);
@@ -170,7 +171,8 @@ namespace music.data.Daos
 
                     songToUpdate.title = updatedObject.Title;
                     songToUpdate.genre = updatedObject.Genre;
-                    songToUpdate.relesed = updatedObject.Released;
+                    songToUpdate.released = updatedObject.Released;
+                    songToUpdate.duration = updatedObject.Duration;
                     songToUpdate.fk_album_id = updatedObject.AlbumId;
                     songToUpdate.fk_artist_id = updatedObject.ArtistId;
                     
