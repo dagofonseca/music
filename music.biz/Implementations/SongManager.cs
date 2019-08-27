@@ -35,6 +35,17 @@ namespace music.biz.Implementations
             return dal.SelectSongsByArtist(artistId);
         }
 
+        /// <summary>
+        /// gets songs of a specific album
+        /// </summary>
+        /// <param name="albumId"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public Response<IEnumerable<SongDto>> GetSongsByAlbum(int albumId, int page = 0)
+        {
+            return dal.SelectSongsByAlbum(albumId, page);
+        }
+
         public Response<SongDto> Create(SongDto newObject)
         {
             Response<SongDto> resp = ValidateSong(newObject);
@@ -101,6 +112,6 @@ namespace music.biz.Implementations
             AlbumDto album = dalAlb.FindById(song.AlbumId).Data;
 
             return album != null;
-        }
+        }                
     }
 }

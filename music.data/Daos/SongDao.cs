@@ -10,6 +10,7 @@ namespace music.data.Daos
 {
     public class SongDao : ISong
     {
+        private readonly int elementsPerPage = 9;
         public Response<int> Delete(int id)
         {
             if (id <= 0)
@@ -154,6 +155,43 @@ namespace music.data.Daos
 
             }
         }
+       
+        /// <summary>
+        /// gets the songs of an specific album. Songs are sort by title. Results are paginated
+        /// </summary>
+        /// <param name="albumId">Id of specific album</param>
+        /// <param name="page">page number of results</param>
+        /// <returns> Response object of IEnumerable<SongDto> </SongDto></returns>
+        public Response<IEnumerable<SongDto>> SelectSongsByAlbum( int albumId, int page = 0 )
+        {
+            if (albumId <= 0)
+                return new Response<IEnumerable<SongDto>>(false, "Id of album must be greater than 0", null);
+
+            try
+            {
+                List<SongDto> response = new List<SongDto>();
+                using (musicDBEntities db = new musicDBEntities())
+                {
+                    List<Song> albumSongs = db.Song.Where(s => s.fk_album_id == albumId).OrderBy(pet => pet.title).Skip(page * elementsPerPage).Take(elementsPerPage).ToList();
+
+                    foreach (Song song in albumSongs)
+                    {
+                        SongDto aux = new SongDto(song.song_id, song.title, song.genre, song.released, song.duration,
+                                            song.fk_album_id.GetValueOrDefault(), song.fk_artist_id.GetValueOrDefault());
+
+                        response.Add(aux);
+                    }
+                }
+                return new Response<IEnumerable<SongDto>>(true, response.Count + " songs in page " + page, response);
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException == null)
+                    return new Response<IEnumerable<SongDto>>(false, "Somethig was wrong. Exception: " + e.Message, null);
+                else
+                    return new Response<IEnumerable<SongDto>>(false, "Somethig was wrong. Exception: " + e.InnerException.InnerException.Message, null);
+            }
+        }
 
         public Response<int> Update(SongDto updatedObject)
         {
@@ -191,5 +229,6 @@ namespace music.data.Daos
             }
 
         }
+                
     }
 }

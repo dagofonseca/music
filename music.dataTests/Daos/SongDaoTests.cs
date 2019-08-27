@@ -1,4 +1,5 @@
-﻿using commons;
+﻿using music.data.Daos;
+using commons;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace music.data.Daos.Tests
     [TestClass()]
     public class SongDaoTests
     {
+        /*
         #region FindTests
         [TestMethod()]
         public void FindByIdTest()
@@ -19,7 +21,8 @@ namespace music.data.Daos.Tests
                 Id = 2,
                 Title = "bohemio de aficion edit",
                 Released = 1998,
-                Genre = "ranchera"
+                Genre = "ranchera",
+                Duration = 182,
             };
             responseSong.SetAlbumId(1);
             responseSong.SetArtistId(1);
@@ -217,5 +220,28 @@ namespace music.data.Daos.Tests
         }
 
         #endregion
+
+        */
+        [TestMethod()]
+        public void SelectSongsByAlbumTest()
+        {
+            SongDao dal = new SongDao();
+
+            string[] expected1 = { "bohemio de aficion", "entre el amor y yo", "me voy a quitar de en medio" };
+            string[] expected2 = { "cenizas", "payaso" };
+
+            Response <IEnumerable<SongDto>> actual1 = dal.SelectSongsByAlbum(1);
+            Response<IEnumerable<SongDto>> actual2 = dal.SelectSongsByAlbum(4);
+
+            Assert.AreEqual(true, actual1.Status);
+            Assert.AreEqual(true, actual2.Status);
+            
+            Assert.AreEqual(expected1[0], actual1.Data.ElementAt(0).Title);
+            Assert.AreEqual(expected1[1], actual1.Data.ElementAt(1).Title);
+            Assert.AreEqual(expected1[2], actual1.Data.ElementAt(2).Title);
+
+            Assert.AreEqual(expected2[0], actual2.Data.ElementAt(0).Title);
+            Assert.AreEqual(expected2[1], actual2.Data.ElementAt(1).Title);
+        }
     }
 }
